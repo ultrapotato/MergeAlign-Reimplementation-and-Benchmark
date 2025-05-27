@@ -1,0 +1,8 @@
+[1,"Installing 'networkD3' ...\n"]
+[2,"trying URL 'https://cran.rstudio.com/bin/macosx/contrib/4.2/networkD3_0.4.tgz'\n"]
+[2,"Content type 'application/x-gzip' length 188115 bytes (183 KB)\n==="]
+[2,"=========================="]
+[2,"=====================\ndownloaded 183 KB\n\n"]
+[1,"The downloaded binary packages are in\n"]
+[1,"\t/var/folders/jh/r2kqjwxn4ms9gp3b0zlj8_6c0000gn/T//RtmpFYoEN1/downloaded_packages\n"]
+[2,"\n\n✔ Package 'networkD3' successfully installed.\n"]

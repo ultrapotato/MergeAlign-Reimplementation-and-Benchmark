@@ -1,0 +1,57 @@
+#install.packages("tidyverse")  #if needed
+library(tidyverse)
+library(patchwork)
+
+data <- read.csv("bali3_benchmark.csv")
+
+data_long <- data %>%
+  pivot_longer(cols = c("Pre_time", "Post_time"), 
+               names_to = "Time", 
+               values_to = "Value")
+
+box <- ggplot(data_long, aes(x = Time, y = Value, fill = Time)) +
+  geom_boxplot() +
+  scale_fill_manual(values = c("blue", "red")) +
+  labs(title = "Boxplot of Pre_time and Post_time", x = "Time Categories", y = "Time") +
+  theme_minimal()
+
+# Paired Scatter Plot
+scatter <- ggplot(data, aes(x = Pre_time, y = Post_time)) +
+  geom_point(color = "blue", alpha = 0.6) +  # Scatter plot points
+  geom_abline(slope = 1, intercept = 0, linetype = "dashed", color = "red") +
+  labs(title = "Paired Scatter Plot of Pre_time vs Post_time", 
+       x = "Pre_time", 
+       y = "Post_time") +
+  theme_minimal()
+
+scatter + box
+
+# Wilcoxon test
+differences <- data$Post_time - data$Pre_time
+shapiro.test(differences)
+
+result <- wilcox.test(data$Pre_time, data$Post_time, paired = TRUE)
+
+print(result)
+
+#other
+
+# Reshape the data to long format for easier plotting
+data_long <- data %>%
+  gather(key = "Step", value = "Time", Pre_time, Post_time, MUSCLE_time)
+
+# Plot the stacked bar plot
+ggplot(data_long, aes(x = Step, y = Time, fill = Step)) +
+  geom_bar(stat = "identity") +
+  labs(title = "Time Breakdown for MergeAlign vs MUSCLE",
+       x = "Step", y = "Time (seconds)", fill = "Step") +
+  theme_minimal() +
+  theme(axis.text.x = element_text(angle = 45, hjust = 1))
+# Create a jitter plot to visualize individual data points
+ggplot(data_long, aes(x = Step, y = Time, color = Step)) +
+  geom_jitter(width = 0.2) +  # Add jitter for better visibility
+  labs(title = "Jitter Plot of Time for Pre-processing, Alignment, and Merging",
+       x = "Step", y = "Time (seconds)") +
+  theme_minimal() +
+  theme(axis.text.x = element_text(angle = 45, hjust = 1))
+
