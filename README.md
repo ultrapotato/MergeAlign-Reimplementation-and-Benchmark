@@ -6,7 +6,7 @@ A tool for improving multiple sequence alignment performance through consensus a
 
 1. Clone this repository:
 ```bash
-git clone https://github.coecis.cornell.edu/mmh287/MergeAlign
+git clone https://github.com/ultrapotato/MergeAlign-Reimplementation-and-Benchmark
 cd mergealign
 ```
 
